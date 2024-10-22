@@ -13,7 +13,5 @@ import lombok.Setter;
 @Getter
 public class UsuarioEntity {
 
-	@Id
-	@GeneratedValue()
-	private Integer idUsuario;
+	
 }
