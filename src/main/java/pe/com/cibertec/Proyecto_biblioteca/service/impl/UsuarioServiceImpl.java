@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import pe.com.cibertec.Proyecto_biblioteca.model.entity.UsuarioEntity;
 import pe.com.cibertec.Proyecto_biblioteca.repository.UsuarioRepository;
 import pe.com.cibertec.Proyecto_biblioteca.service.UsuarioService;
 import pe.com.cibertec.Proyecto_biblioteca.utils.Utilitarios;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService{
 	
 	private final UsuarioRepository usuarioRepository;
@@ -20,8 +21,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public void crearUsuario(UsuarioEntity usuarioEntity) {
 		String passwordHash = Utilitarios.extraerHash(usuarioEntity.getPassword());
 		usuarioEntity.setPassword(passwordHash);
-		usuarioRepository.save(usuarioEntity);
-		
+		usuarioRepository.save(usuarioEntity);	
 	}
 
 	@Override
@@ -85,9 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}catch (Exception e) {
 			throw new RuntimeException("Error al actualizar");
 		}
-		
-		
+			
 	}
-
 
 }

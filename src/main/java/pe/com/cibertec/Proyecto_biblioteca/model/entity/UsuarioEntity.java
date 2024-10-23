@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="tb_usuario", uniqueConstraints = @UniqueConstraint(columnNames = "dniUsuario"))
+@Table(name="tb_usuario")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -19,7 +19,7 @@ import lombok.Setter;
 public class UsuarioEntity {
 
 	@Id
-	@Column(name = "dniUsuario", nullable = false, columnDefinition = "CHAR(8)",length = 8 )
+	@Column(name = "dniUsuario", nullable = false, columnDefinition = "CHAR(8)",length = 8, unique = true)
 	private String dni;
 	
 	@Column(name = "nombre", length = 60, nullable = false)
@@ -33,5 +33,6 @@ public class UsuarioEntity {
 	
 	@Column(name = "password", nullable = false)
 	private String password;
+
 	
 }
