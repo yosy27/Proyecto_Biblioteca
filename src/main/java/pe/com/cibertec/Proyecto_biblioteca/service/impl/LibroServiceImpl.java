@@ -25,7 +25,9 @@ public class LibroServiceImpl implements LibroService{
 	@Override
 	public void crearLibro(LibroEntity libroEntity, MultipartFile foto) {
 		String nombreFoto = Utilitarios.guardarImagen(foto);
-		libroEntity.setUrLImagenLibro(nombreFoto);
+		 if (nombreFoto != null) {
+		        libroEntity.setUrLImagenLibro("/foto_libro/" + nombreFoto); // Asegúrate de que esta ruta sea correcta
+		    }
 		libroRepository.save(libroEntity);
 	}
 

@@ -18,6 +18,7 @@ import pe.com.cibertec.Proyecto_biblioteca.model.entity.UsuarioEntity;
 import pe.com.cibertec.Proyecto_biblioteca.service.CategoriaService;
 import pe.com.cibertec.Proyecto_biblioteca.service.LibroService;
 import pe.com.cibertec.Proyecto_biblioteca.service.UsuarioService;
+import pe.com.cibertec.Proyecto_biblioteca.utils.Utilitarios;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,25 +32,33 @@ public class LibroController {
 	
 	@GetMapping("/lista_libros")
 	public String listarLibro(Model model, HttpSession session) {
-		if(session.getAttribute("usuario") == null) {
-			return "redirect:/";
-		}
-		String correoSesion = session.getAttribute("usuario").toString();
-		
-		UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(
-				correoSesion);
-		
-		String libroSesion = session.getAttribute("libro").toString();
-		Integer libroId = Integer.parseInt(libroSesion);
-		LibroEntity libroEncontrado = libroService.buscarLibroPorId(libroId); 
-		
-		model.addAttribute("foto",libroEncontrado.getUrLImagenLibro());
-		
-		List<LibroEntity>listarLibro = libroService.listarLibros();
-		model.addAttribute("listalibr", listarLibro);
-		return "lista_libro";
+	    if (session.getAttribute("usuario") == null) {
+	        System.out.println("No hay usuario en la sesión. Redirigiendo a la página de inicio.");
+	        return "redirect:/";
+	    }
+
+	    String correoSesion = session.getAttribute("usuario").toString();
+	    System.out.println("Usuario encontrado: " + correoSesion);
+
+	    UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(correoSesion);
+
+	    if (session.getAttribute("libro") == null) {
+	        System.out.println("No hay libro en la sesión. Redirigiendo a la página de inicio.");
+	        return "redirect:/registrar_libro"; // O redirige a una página de error o información
+	    }
+
+	    String libroSesion = session.getAttribute("libro").toString();
+	    Integer libroId = Integer.parseInt(libroSesion);
+	    LibroEntity libroEncontrado = libroService.buscarLibroPorId(libroId); 
+
+	    model.addAttribute("foto", libroEncontrado.getUrLImagenLibro());
+
+	    List<LibroEntity> listarLibro = libroService.listarLibros();
+	    model.addAttribute("listalibr", listarLibro);
+	    return "lista_libro";
 	}
-	
+
+
 	@GetMapping("/registrar_libro")
 	public String mostrarRegistrarLibro(Model model, HttpSession session) {
 		if(session.getAttribute("usuario") == null) {
@@ -62,10 +71,33 @@ public class LibroController {
 	}
 	
 	@PostMapping("/registrar_libro")
-	public String registrarLibro(@ModelAttribute("libro")LibroEntity libroEntity,
-			 @RequestParam("foto") MultipartFile foto,
-			Model model) {
-		libroService.crearLibro(libroEntity, foto);
-		return "registrar_libro";
+	public String registrarLibro(@ModelAttribute("libro") LibroEntity libroEntity,
+	                             @RequestParam("foto") MultipartFile foto,
+	                             Model model,
+	                             HttpSession session) {
+	    // Guardar la imagen y obtener el nombre del archivo
+	    String nombreArchivo = Utilitarios.guardarImagen(foto);
+	    
+	    // Asignar la URL de la imagen al libro (asumiendo que la carpeta se llama "foto_libro")
+	    if (nombreArchivo != null) {
+	        libroEntity.setUrLImagenLibro("/foto_libro/" + nombreArchivo); // Asegúrate de que esta ruta sea correcta
+	    } else {
+	        model.addAttribute("mensaje", "Error al guardar la imagen.");
+	        return "registrar_libro"; // O redirige a donde sea apropiado
+	    }
+
+	    // Crea el libro utilizando el servicio
+	    libroService.crearLibro(libroEntity, foto);
+	    
+	    // Agrega el ID del libro a la sesión
+	    session.setAttribute("libro", libroEntity.getIdLibro());
+	    
+	    model.addAttribute("mensaje", "Libro registrado exitosamente.");
+	    
+	    // Redirige a la página de listado de libros
+	    return "redirect:/lista_libros";
 	}
+
+
+
 }
