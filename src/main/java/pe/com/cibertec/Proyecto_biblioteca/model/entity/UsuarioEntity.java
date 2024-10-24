@@ -28,8 +28,8 @@ public class UsuarioEntity {
 	@Column(name = "apellido", length = 60, nullable = false)
 	private String apellido;
 	
-	@Column(name = "email", nullable = false, length =60)
-	private String email;
+	@Column(name = "correo", nullable = false, length =60)
+	private String correo;
 	
 	@Column(name = "password", nullable = false)
 	private String password;

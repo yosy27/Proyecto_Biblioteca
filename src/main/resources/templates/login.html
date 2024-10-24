@@ -14,7 +14,7 @@
   <form th:action="@{/login}" method="post" th:object="${usuario}">
     <div class="form-group">
       <label for="username">Email</label>
-      <input th:field="*{email}" type="email" class="form-control" id="username" name="username" placeholder="Ingrese su usuario" required>
+      <input th:field="*{correo}" type="email" class="form-control" id="username" name="username" placeholder="Ingrese su usuario" required>
     </div>
     <div class="form-group">
       <label for="password">Contraseña</label>

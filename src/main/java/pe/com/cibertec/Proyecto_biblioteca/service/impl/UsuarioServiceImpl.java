@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public boolean validarUsuario(UsuarioEntity usuarioFormulario) {
 		// 1. Recuperar el usuario por correo
 		UsuarioEntity usuarioEncontrado = usuarioRepository
-				.findByCorreo(usuarioFormulario.getEmail());
+				.findByCorreo(usuarioFormulario.getCorreo());
 		
 		// correo existe?
 		if(usuarioEncontrado == null) {
@@ -79,7 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		try {
 			usuarioEncontrado.setNombre(usuarioActualizado.getNombre());
 			usuarioEncontrado.setApellido(usuarioActualizado.getApellido());
-			usuarioEncontrado.setEmail(usuarioActualizado.getEmail());
+			usuarioEncontrado.setCorreo(usuarioActualizado.getCorreo());
 			usuarioEncontrado.setPassword(usuarioActualizado.getPassword());
 			usuarioRepository.save(usuarioEncontrado);
 		}catch (Exception e) {
