@@ -34,13 +34,18 @@ public class LibroController {
 		if(session.getAttribute("usuario") == null) {
 			return "redirect:/";
 		}
-		
 		String correoSesion = session.getAttribute("usuario").toString();
+		
 		UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(
 				correoSesion);
 		
+		String libroSesion = session.getAttribute("libro").toString();
+		Integer libroId = Integer.parseInt(libroSesion);
+		LibroEntity libroEncontrado = libroService.buscarLibroPorId(libroId); 
+		
+		model.addAttribute("foto",libroEncontrado.getUrLImagenLibro());
+		
 		List<LibroEntity>listarLibro = libroService.listarLibros();
-        model.addAttribute("categorias", categoriaService.obtenerTodasCategorias());
 		model.addAttribute("listalibr", listarLibro);
 		return "lista_libro";
 	}
