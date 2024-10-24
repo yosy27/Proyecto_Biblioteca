@@ -12,4 +12,6 @@ public interface UsuarioService {
 	void actualizarUsuario(String id, UsuarioEntity usuarioEntity);
 	boolean validarUsuario(UsuarioEntity usuarioEntity);
 	void eliminarUsuario(String id);
+	UsuarioEntity buscarUsuarioPorCorreo(String correo);
+
 }

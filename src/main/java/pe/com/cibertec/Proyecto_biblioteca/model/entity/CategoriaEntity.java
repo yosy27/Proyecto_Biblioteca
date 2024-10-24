@@ -6,20 +6,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_disponibilidad")
-@Getter
+@Table(name="tb_categoria")
 @Setter
-public class DisponibilidadEntity {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CategoriaEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "disponibilidad_id",nullable = false)
-	private Integer idDisponibilidad;
+	@Column(name="id_categoria", nullable=false)
+	private Integer idCategoria;
 	
-	@Column(name = "nombre_disponibilidad")
-	private String nombreDisponibilidad;
+	@Column(name="nombre_categoria",nullable = false)
+	private String nombreCategoria;
 }

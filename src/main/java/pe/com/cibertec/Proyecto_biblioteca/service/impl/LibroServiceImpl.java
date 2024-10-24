@@ -46,7 +46,8 @@ public class LibroServiceImpl implements LibroService{
 			libroEncontrado.setTitulo(libroActualizado.getTitulo());
 			libroEncontrado.setAutor(libroActualizado.getAutor());
 			libroEncontrado.setISBN(libroActualizado.getISBN());
-			libroEncontrado.setDisponibilidadEntity(libroActualizado.getDisponibilidadEntity());
+			libroEncontrado.setDisponible(libroActualizado.getDisponible());
+			libroEncontrado.setCategoriaEntity(libroActualizado.getCategoriaEntity());
 			libroEncontrado.setUrLImagenLibro(libroActualizado.getUrLImagenLibro());
 			libroRepository.save(libroEncontrado);
 		}catch(Exception e) {

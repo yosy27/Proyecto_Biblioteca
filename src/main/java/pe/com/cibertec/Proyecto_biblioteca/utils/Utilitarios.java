@@ -12,13 +12,13 @@ public class Utilitarios {
 	
 	public static String guardarImagen(MultipartFile foto) {
 		try {
-			Path pathDire = Paths.get("src/main/resources/static/usuario_foto/");
+			Path pathDire = Paths.get("src/main/resources/static/foto_libro/");
 			if(!Files.exists(pathDire)) {
 				Files.createDirectories(pathDire);
 			}
 			
 			byte[] bytes = foto.getBytes();
-			Path path = Paths.get("src/main/resources/static/usuario_foto/" + 
+			Path path = Paths.get("src/main/resources/static/foto_libro/" + 
 			foto.getOriginalFilename());
 			
 			Files.write(path, bytes);

@@ -38,8 +38,11 @@ public class LibroEntity {
 	@Column(name = "url_imagen")
 	private String urLImagenLibro;
 	
+	@Column(name="disponible")
+	private Boolean disponible;
+	
 	@ManyToOne
-	@JoinColumn(name="fk_disponibilidad", nullable = false)
-	private DisponibilidadEntity disponibilidadEntity;
+	@JoinColumn(name="fk_categoria", nullable = false)
+	private CategoriaEntity categoriaEntity;
 
 }

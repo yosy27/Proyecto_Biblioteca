@@ -40,14 +40,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public boolean validarUsuario(UsuarioEntity usuarioFormulario) {
 		// 1. Recuperar el usuario por correo
 		UsuarioEntity usuarioEncontrado = usuarioRepository
-				.findByEmail(usuarioFormulario.getEmail());
+				.findByCorreo(usuarioFormulario.getEmail());
 		
 		// correo existe?
 		if(usuarioEncontrado == null) {
 			return false;
 		}
 		//2. Validar password input con el hash de la base de datos
-		if(Utilitarios.checkPassword(usuarioFormulario.getPassword(),
+		if(!Utilitarios.checkPassword(usuarioFormulario.getPassword(),
 				usuarioEncontrado.getPassword())) {
 			return false;
 		}
@@ -86,6 +86,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new RuntimeException("Error al actualizar");
 		}
 			
+	}
+
+	@Override
+	public UsuarioEntity buscarUsuarioPorCorreo(String correo) {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findByCorreo(correo);
 	}
 
 }
